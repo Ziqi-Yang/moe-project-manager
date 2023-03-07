@@ -1,0 +1,25 @@
+[package]
+name = "moe-project-manager"
+description = ""
+version = "0.1.0"
+edition = "2021"
+homepage = "https://github.com/Ziqi-Yang/moe-project-manager"
+repository = "https://github.com/Ziqi-Yang/moe-project-manager"
+readme = "README.org"
+license = "GPLv3"
+authors = ["Ziqi Yang <mr.ziqiyang@gmail.com>"]
+# keywords = []
+categories = ["command-line-utilities"] # https://crates.io/category_slugs
+
+[badges]
+maintenance = { status = "none" }
+
+# cargo build --profile release-lto
+[profile.release-lto]
+inherits = "release"
+lto = true
+
+[dependencies]
+clap = { version = "4.1.8", features = ["derive"] }
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
