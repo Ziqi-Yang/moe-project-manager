@@ -1,4 +1,4 @@
-use clap::{ArgGroup, Args, Parser, Subcommand};
+use clap::{ArgGroup, Parser, Subcommand, CommandFactory};
 use std::path::PathBuf;
 
 /// A Extraordinary Moe Global Project Manager
@@ -9,8 +9,7 @@ use std::path::PathBuf;
     about,
     long_about = None
 )]
-struct Arg {
-    #[command(subcommand)]
+struct Arg { #[command(subcommand)]
     command: Option<Commands>,
 }
 
@@ -46,6 +45,8 @@ enum Commands {
 
     /// init project using project tempates
     Init {
+        url: Option<String>,
+
         /// target program language, if language is not set, the range is all languages
         #[arg(short, long)]
         language: Option<String>,
@@ -57,6 +58,23 @@ enum Commands {
         /// don't use fzf, just list templates plainly
         #[arg(short = 'f', long)]
         no_fzf: bool,
+    },
+
+    /// Copy one or more files from a project template, when their is no filter appiled, auto detect the current(project)
+    Cp {
+        /// target program language, if language is not set, the range is all languages
+        language: Option<String>,
+
+        /// choose a template in corresponding language(or all languages if language is not set)
+        #[arg(short, long)]
+        template: Option<String>,
+
+        /// don't use fzf, just list templates plainly
+        #[arg(short = 'f', long)]
+        no_fzf: bool,
+
+        /// don't use auto-detector
+        no_auto: bool,
     },
 
     /// List existing projects
@@ -117,5 +135,19 @@ enum Commands {
 
 fn main() {
     let args = Arg::parse();
+    // custom checks 
+    match &args.command {
+        Some(Commands::Init {url, language, template, no_fzf}) => {
+            if url.is_some() && (language.is_some() || template.is_some() || no_fzf.to_owned() ) {
+                let mut cmd = Arg::command();
+                cmd.error(
+                    clap::error::ErrorKind::ValueValidation,
+                    "`url` can not be used with other arguments."
+                ).exit();
+            }
+        },
+        None => {},
+        _ => {}
+    }
     println!("{:#?}", args);
 }

@@ -3,3 +3,5 @@
 - [ ] support hook, so we call call custom command after entering project root
   The hook should also pass all environment to the command for security reason(like develop key)
   instances are: onefetch, ...
+
+- [ ] support cp multiple or single file in a template to current destination.
