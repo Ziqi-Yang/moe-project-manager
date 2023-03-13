@@ -1,6 +1,10 @@
 use clap::{ArgGroup, Parser, Subcommand, CommandFactory};
 use std::path::PathBuf;
 
+mod config;
+mod utils;
+mod db;
+
 /// A Extraordinary Moe Global Project Manager
 #[derive(Parser, Debug)]
 #[command(
