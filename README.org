@@ -4,6 +4,9 @@
  1. SQLite version 3.14.0 or newer (according to [[https://github.com/rusqlite/rusqlite][rusqlite]])
  2. Fzf
 
+* Special Thanks to
+- [[https://github.com/ajeetdsouza/zoxide][zoxide]], which gives the project a lot of inspirations.
+
 * License
 The program is licensed under the *GPLv3*. It uses several Rust libraries under the MIT license, which can be found in [[./Cargo.toml][Cargo.toml]]. Special thanks to these libraries!
 
