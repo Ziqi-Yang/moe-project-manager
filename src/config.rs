@@ -7,11 +7,11 @@ use std::path::PathBuf;
 
 pub const DB_NAME: &str = "p.db3";
 
-fn project_dirs() -> ProjectDirs {
+pub fn project_dirs() -> ProjectDirs {
     ProjectDirs::from("com", "MeowKing", "mpm").expect("no valid home directory path could be retrieved from the operating system")
 }
 
-fn home_dir() -> Result<PathBuf> {
+pub fn home_dir() -> Result<PathBuf> {
     let basedirs = BaseDirs::new().expect("no valid home directory path could be retrieved from the operating system");
     let home_dir = basedirs.home_dir();
     fs::create_dir_all(home_dir)?;

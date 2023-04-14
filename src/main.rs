@@ -6,11 +6,11 @@ mod utils;
 mod cmd;
 mod db;
 
-use cmd::{Arg, Run};
+use cmd::{Arg};
 
 fn main() -> Result<()> {
-    let cli = Arg::parse();
-    cli.check_arg()?;
-    cli.run()?;
+    let _cli = Arg::parse();
+    // cli.check_arg()?;
+    // cli.run()?;
     Ok(())
 }
