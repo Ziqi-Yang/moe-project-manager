@@ -1,6 +1,6 @@
-use std::path::PathBuf;
 use anyhow::Result;
-use clap::{ArgGroup, Parser, Subcommand, CommandFactory};
+use clap::{ArgGroup, CommandFactory, Parser, Subcommand};
+use std::path::PathBuf;
 
 const ENV_HELP: &str = "Environment variables:
   _MPM_DATA_DIR          Path for MPM data files";
@@ -12,9 +12,11 @@ const ENV_HELP: &str = "Environment variables:
     version,
     after_help = ENV_HELP,
     about,
-    long_about = None
+    long_about = None,
+    arg_required_else_help = true
 )]
-pub struct Arg { #[command(subcommand)]
+pub struct Arg {
+    #[command(subcommand)]
     pub command: Option<Commands>,
 
     /// don't use fzf
@@ -31,43 +33,42 @@ pub enum Commands {
     Cp(Cp),
     List(List),
     Jump(Jump),
-    Edit(Edit)
+    Edit(Edit),
 }
 
 /// add project root to known projects list
 #[derive(Debug, Parser)]
 pub struct Add {
-    project: PathBuf,
+    pub project: PathBuf,
 
     /// nickname for this project
-    nick_name: Option<String>,
+    pub nick_name: Option<String>,
 
-    /// target program language, defautl to autodetect language
+    /// target program language, default to auto-detected language
     #[arg(short, long)]
-    language: Option<String>,
+    pub language: Option<String>,
 
     /// add category attribution
     #[arg(short, long)]
-    category: Option<String>,
+    pub category: Option<String>,
 
     /// add tag attribution, can be used multiple times
     // -t hello -t hi
     #[arg(short, long)]
-    tags: Vec<String>,
+    pub tags: Vec<String>,
 }
 
-
-/// Scan all subdirectories and automatically add projects
+/// Scan all sub-directories and automatically add projects
 #[derive(Debug, Parser)]
 pub struct Scan {
     /// root path for scan
-    path: PathBuf
+    path: PathBuf,
 }
 
 /// change directory while executing automatical project adding function(prompt, directly add, do nothing)
 #[derive(Debug, Parser)]
 pub struct Cd {
-    path: PathBuf
+    path: PathBuf,
 }
 
 /// init project using project tempates
@@ -76,7 +77,7 @@ pub struct Init {
     url: Option<String>,
 
     /// [filter] target program language
-    #[arg(short, long, default_value="all")]
+    #[arg(short, long, default_value = "all")]
     language: Option<String>,
 
     /// [filter] certain category
@@ -97,7 +98,7 @@ pub struct Init {
 #[derive(Debug, Parser)]
 pub struct Cp {
     /// target program language
-    #[arg(short, long, default_value="all")]
+    #[arg(short, long, default_value = "all")]
     language: Option<String>,
 
     /// [filter] certain category
@@ -122,9 +123,9 @@ pub struct Cp {
 pub struct List {
     /// fuzzy project name
     p_name: Option<String>,
-    
+
     /// [filter] target program language, default to all languages
-    #[arg(short, long, default_value="all")]
+    #[arg(short, long, default_value = "all")]
     language: Option<String>,
 
     /// [filter] certain category
@@ -177,23 +178,34 @@ pub struct Edit {
     configuration: bool,
 }
 
-
 impl Arg {
     pub fn check_arg(&self) -> Result<()> {
         match &self.command {
-            Some(Commands::Init(Init{url, language, category, tags, template})) => {
-                if url.is_some() && (language.is_some() || category.is_some() || !tags.is_empty() || template.is_some() ) {
+            Some(Commands::Init(Init {
+                url,
+                language,
+                category,
+                tags,
+                template,
+            })) => {
+                if url.is_some()
+                    && (language.is_some()
+                        || category.is_some()
+                        || !tags.is_empty()
+                        || template.is_some())
+                {
                     let mut cmd = Arg::command();
                     cmd.error(
                         clap::error::ErrorKind::ValueValidation,
-                        "`url` can not be used with other arguments."
-                    ).exit();
+                        "`url` can not be used with other arguments.",
+                    )
+                    .exit();
                 } else {
                     Ok(())
                 }
-            },
+            }
             None => Ok(()),
-            _ => Ok(())
+            _ => Ok(()),
         }
     }
 }

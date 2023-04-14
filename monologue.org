@@ -7,3 +7,7 @@
 - [ ] support cp multiple or single file in a template to current destination.
 
 - [ ] init project can use makefile utility to execute command before/after creating project
+
+- [ ] use [[https://docs.rs/tokei/12.1.2/tokei/index.html][tokei]] and [[https://crates.io/crates/gix][gix]] to find the main language of a project.
+
+- [ ] provide =lib.rs= later 

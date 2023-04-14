@@ -3,8 +3,7 @@
 In early development...
 
 * Dependencies
- 1. SQLite version 3.14.0 or newer (according to [[https://github.com/rusqlite/rusqlite][rusqlite]])
- 2. [[https://github.com/junegunn/fzf][fzf]]
+ 1. [[https://github.com/junegunn/fzf][fzf]]
 
 * Special Thanks to
 - [[https://github.com/ajeetdsouza/zoxide][zoxide]], which gives the project a lot of inspirations.

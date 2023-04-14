@@ -1,18 +1,16 @@
-use clap::{ArgGroup, Parser, Subcommand, CommandFactory};
+use clap::Parser;
 use anyhow::Result;
-use std::path::PathBuf;
 
 mod config;
 mod utils;
 mod cmd;
 mod db;
 
-use cmd::cmd::{Arg, Commands};
+use cmd::{Arg, Run};
 
 fn main() -> Result<()> {
-    let args = Arg::parse();
-    args.check_arg()?;
-    // custom checks for Args
-    println!("{:#?}", args);
+    let cli = Arg::parse();
+    cli.check_arg()?;
+    cli.run()?;
     Ok(())
 }

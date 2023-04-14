@@ -1,5 +1,5 @@
 [package]
-name = "moe-project-manager"
+name = "mpm"
 description = ""
 version = "0.1.0"
 edition = "2021"
@@ -23,6 +23,5 @@ lto = true
 anyhow = "1.0.69"
 clap = { version = "4.1.8", features = ["derive"] }
 directories = "4.0.1"
-rusqlite = { version = "0.28.0", features = ["bundled"] }
-
+tokei = "12.1.2"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
